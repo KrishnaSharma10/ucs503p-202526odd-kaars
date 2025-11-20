@@ -2,10 +2,11 @@ import React from "react";
 import { MapPin, Building2, Star } from "lucide-react";
 
 const JobCard = ({ job }) => {
-    const { job_title, company, location, skills, reason, score, apply_link } = job; // ✅ Changed 'link' to 'apply_link' to match backend
+    const { job_title, company, location, skills, reason, score, apply_link } = job;
 
     return (
         <div className="p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow flex flex-col h-full">
+            
             {/* Job Title and Company */}
             <div className="mb-3">
                 <h3 className="text-lg font-semibold text-gray-800">{job_title}</h3>
@@ -69,7 +70,11 @@ const JobCard = ({ job }) => {
                         Apply Now
                     </button>
                 </a>
-            )
+            ) : (
+                <button className="w-full py-2 rounded-lg bg-gray-400 text-white font-semibold mt-auto" disabled>
+                    No Link Available
+                </button>
+            )}
         </div>
     );
 };
