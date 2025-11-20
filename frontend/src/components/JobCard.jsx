@@ -2,7 +2,7 @@ import React from "react";
 import { MapPin, Building2, Star } from "lucide-react"; // Star icon for score
 
 const JobCard = ({ job }) => {
-    const { job_title, company, location, skills, reason, score } = job; // include score
+    const { job_title, company, location, skills, reason, score, link } = job; // include score
 
     return (
         <div className="p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow flex flex-col h-full">
@@ -49,8 +49,8 @@ const JobCard = ({ job }) => {
             </div>
 
             {/* View Details Button at bottom */}
-            <button className="w-full py-2 mt-auto rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-colors">
-                View Details
+            <button className="w-full py-2 mt-auto rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-colors" href=link>
+                Apply
             </button>
         </div>
     );
