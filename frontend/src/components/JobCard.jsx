@@ -49,9 +49,11 @@ const JobCard = ({ job }) => {
             </div>
 
             {/* View Details Button at bottom */}
-            <button className="w-full py-2 mt-auto rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-colors" href=link>
-                Apply
+            <a href= link>
+            <button className="w-full py-2 mt-auto rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-colors">
+                Apply HEREEEE
             </button>
+                </a>
         </div>
     );
 };
