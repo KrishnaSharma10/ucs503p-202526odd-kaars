@@ -116,7 +116,7 @@ csv_path = os.path.join(BASE_DIR, "cleaned_jobs_30.csv")
 
 try:
     df_jobs = pd.read_csv(csv_path)
-    df_jobs['skills_clean'] = df_jobs['skills_clean'].fillna('').str.lower().str.split(r',\s*')
+    df_jobs['skills_list'] = df_jobs['skills_clean'].fillna('').str.lower().str.split(r',\s*')
     print(f"✓ Loaded {len(df_jobs)} jobs successfully")
 except Exception as e:
     print(f"✗ Error loading jobs CSV: {e}")
