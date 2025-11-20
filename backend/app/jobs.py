@@ -75,7 +75,7 @@ print("Extracting skills using Gemini...")
 df['skills'] = df['description'].apply(extract_skills)
 
 # Reorder columns to have skills after description
-df = df[['job_title', 'company', 'location', 'description', 'skills', 'job_apply_link']]
+df = df[['job_title', 'company', 'location', 'description', 'skills', 'apply_link']]
 
 # Save to CSV
 df.to_csv('cleaned_jobs_30.csv', index=False)
