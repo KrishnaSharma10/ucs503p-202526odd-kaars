@@ -37,7 +37,7 @@ const HeroSection = () => {
             const matchRes = await fetch(`${API_BASE_URL}/match_jobs`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(skillData.skills),
+                body: JSON.stringify({ skills: skillData.skills }), // <-- FIXED
             });
             console.log("sent 2")
             const jobs = await matchRes.json(); // ✅ read response properly
