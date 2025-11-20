@@ -45,7 +45,7 @@ df = df.rename(columns={
     "employer_name": "company",
     "job_location": "location",
     "job_description": "description",
-    "job_apply_link": "job_apply_link"
+    "job_apply_link": "apply_link"
 })
 
 # Configure Gemini API
