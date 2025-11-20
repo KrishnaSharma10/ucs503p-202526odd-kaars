@@ -49,8 +49,8 @@ df = df.rename(columns={
 })
 
 # Configure Gemini API
-genai.configure(api_key="YOUR_GEMINI_API_KEY")  # Replace with your actual API key
-model = genai.GenerativeModel("gemini-pro")
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 # Function to extract skills using Gemini
 def extract_skills(description):
