@@ -37,7 +37,7 @@ const Navbar = () => {
 
                     {/* Jobs Recommendor */}
                     <NavLink
-                        to="/recommend"
+                        to="/recommendedjobs"
                         className="flex flex-col items-center gap-1 group"
                     >
                         {({ isActive }) => (
