@@ -1,8 +1,8 @@
 import React from "react";
-import { MapPin, Building2, Star } from "lucide-react"; // Star icon for score
+import { MapPin, Building2, Star } from "lucide-react";
 
 const JobCard = ({ job }) => {
-    const { job_title, company, location, skills, reason, score, link } = job; // include score
+    const { job_title, company, location, skills, reason, score, apply_link } = job; // ✅ Changed 'link' to 'apply_link' to match backend
 
     return (
         <div className="p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow flex flex-col h-full">
@@ -23,38 +23,60 @@ const JobCard = ({ job }) => {
                 </div>
             </div>
 
-            {/* Optional Score */}
+            {/* Score */}
             {score !== undefined && (
                 <div className="flex items-center gap-2 text-sm text-yellow-600 mb-3">
-                    <Star className="w-4 h-4" />
-                    <span>Score: {score}</span>
+                    <Star className="w-4 h-4 fill-yellow-600" />
+                    <span className="font-semibold">Match Score: {score}%</span>
                 </div>
             )}
 
             {/* Reason */}
-            <p className="text-sm text-gray-500 mb-3">
-                <strong>Skills:</strong> {reason}
-            </p>
+            {reason && (
+                <p className="text-sm text-gray-600 mb-3">
+                    <strong>Match Reason:</strong> {reason}
+                </p>
+            )}
 
             {/* Skills */}
-            <div className="flex flex-wrap gap-2 mb-3">
-                {skills.map((skill, idx) => (
-                    <span
-                        key={idx}
-                        className="px-2 py-1 text-xs font-medium bg-blue-100 text-green-800 rounded"
-                    >
-                        {skill}
-                    </span>
-                ))}
-            </div>
+            {skills && skills.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                    {skills.slice(0, 6).map((skill, idx) => (
+                        <span
+                            key={idx}
+                            className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded"
+                        >
+                            {skill}
+                        </span>
+                    ))}
+                    {skills.length > 6 && (
+                        <span className="px-2 py-1 text-xs font-medium text-gray-500">
+                            +{skills.length - 6} more
+                        </span>
+                    )}
+                </div>
+            )}
 
-            {/* View Details Button at bottom */}
-            <a href= {link}
-                target="_blank">  
-                <button className="w-full py-2 mt-auto rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-colors">
-                Apply HEREEEE
-            </button>
+            {/* Apply Button */}
+            {apply_link ? (
+                <a 
+                    href={apply_link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="mt-auto"
+                >
+                    <button className="w-full py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-colors">
+                        Apply Now
+                    </button>
                 </a>
+            ) : (
+                <button 
+                    disabled 
+                    className="w-full py-2 mt-auto rounded-lg bg-gray-300 text-gray-500 font-semibold cursor-not-allowed"
+                >
+                    No Link Available
+                </button>
+            )}
         </div>
     );
 };
