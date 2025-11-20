@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Upload, FileText } from "lucide-react";
-import { useNavigate } from "react-router-dom"; // ✅ Add this if using React Router
+import { useNavigate } from "react-router-dom";
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const HeroSection = () => {
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate(); // ✅ for routing to job grid
+    const navigate = useNavigate();
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -20,6 +20,7 @@ const HeroSection = () => {
     const handleUpload = async () => {
         if (!file) return;
         setLoading(true);
+
         const formData = new FormData();
         formData.append("file", file);
 
@@ -29,32 +30,59 @@ const HeroSection = () => {
                 method: "POST",
                 body: formData,
             });
-            const skillData = await skillRes.json();
 
-            console.log("Skills received:", skillData.skills); // ✅ debug
+            if (!skillRes.ok) {
+                const errorData = await skillRes.json();
+                throw new Error(errorData.detail || "Failed to upload resume");
+            }
+
+            const skillData = await skillRes.json();
+            console.log("Skills received:", skillData.skills);
+
+            if (!skillData.skills || skillData.skills.length === 0) {
+                alert("❌ No skills found in your resume. Please try a different file.");
+                return;
+            }
 
             // Step 2: Send skills to match_jobs
+            // ✅ FIX: Wrap in object with "skills" key
             const matchRes = await fetch(`${API_BASE_URL}/match_jobs`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(skillData.skills),
+                body: JSON.stringify({ skills: skillData.skills }), // ✅ FIXED!
             });
-            console.log("sent 2")
-            const jobs = await matchRes.json(); // ✅ read response properly
-            console.log("Jobs received:", jobs); // ✅ debug
+
+            if (!matchRes.ok) {
+                const errorData = await matchRes.json();
+                throw new Error(errorData.detail || "Failed to match jobs");
+            }
+
+            const jobs = await matchRes.json();
+            console.log("Jobs received:", jobs);
+
+            // ✅ Defensive check: ensure it's an array
+            if (!Array.isArray(jobs)) {
+                console.error("Expected array but got:", jobs);
+                alert("❌ Unexpected response format from server");
+                return;
+            }
+
+            if (jobs.length === 0) {
+                alert("⚠️ No matching jobs found. Try updating your resume with more skills.");
+                return;
+            }
 
             // Store and navigate
             sessionStorage.setItem("recommendedJobs", JSON.stringify(jobs));
             navigate("/recommendedjobs");
+
         } catch (err) {
-            console.error(err);
-            alert("❌ Error analyzing resume. Try again.");
+            console.error("Upload error:", err);
+            alert(`❌ Error: ${err.message}`);
         } finally {
             setLoading(false);
         }
     };
-
-
 
     return (
         <section className="py-20 bg-blue-100 text-black">
@@ -101,8 +129,11 @@ const HeroSection = () => {
                                 <button
                                     onClick={handleUpload}
                                     disabled={!file || loading}
-                                    className={`cursor:pointer w-full py-3 rounded-lg text-white font-semibold transition-colors ${file ? "bg-blue-500 hover:bg-blue-600" : "bg-blue-400 cursor-not-allowed"
-                                        }`}
+                                    className={`w-full py-3 rounded-lg text-white font-semibold transition-colors ${
+                                        file && !loading
+                                            ? "bg-blue-500 hover:bg-blue-600 cursor-pointer"
+                                            : "bg-blue-400 cursor-not-allowed"
+                                    }`}
                                 >
                                     {loading ? "Analyzing..." : "Analyze My Resume & Find Jobs"}
                                 </button>
