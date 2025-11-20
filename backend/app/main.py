@@ -195,6 +195,7 @@ async def match_jobs(resume_skills: List[str]):
                 "skills": [s.strip() for s in skills_array],
                 "reason": row["reason"] or "No reason provided",
                 "score": int(row["score"])
+                "apply_link": row["apply_link"]
             })
 
         return jobs_list
