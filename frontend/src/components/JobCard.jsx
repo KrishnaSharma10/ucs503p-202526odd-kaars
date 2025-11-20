@@ -69,14 +69,7 @@ const JobCard = ({ job }) => {
                         Apply Now
                     </button>
                 </a>
-            ) : (
-                <button 
-                    disabled 
-                    className="w-full py-2 mt-auto rounded-lg bg-gray-300 text-gray-500 font-semibold cursor-not-allowed"
-                >
-                    No Link Available
-                </button>
-            )}
+            )
         </div>
     );
 };
