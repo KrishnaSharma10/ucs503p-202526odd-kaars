@@ -43,7 +43,7 @@ const Navbar = () => {
                         {({ isActive }) => (
                             <>
                                 <p className="transition duration-200 group-hover:-translate-y-0.5">
-                                    Jobs Recommender
+                                    Jobs
                                 </p>
                                 <hr
                                     className={`w-2/4 h-[1.5px] bg-blue-600 border-none ${
