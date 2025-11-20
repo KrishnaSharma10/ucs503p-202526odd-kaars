@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+    const location = useLocation();
     const [open, setOpen] = useState(false);
+    const isHomeActive =
+        location.pathname === "/" ||
+        location.pathname === "/recommendedjobs";
+
 
     return (
         <div className="w-full bg-white shadow font-medium">
             <div className="flex items-center justify-between py-5 px-6 md:px-10">
-                
+
                 {/* Logo */}
                 <NavLink to="/" className="text-3xl font-bold text-blue-600">
                     JobWise
@@ -21,34 +26,31 @@ const Navbar = () => {
                         to="/"
                         className="flex flex-col items-center gap-1 group"
                     >
-                        {({ isActive }) => (
+                        {() => (
                             <>
                                 <p className="transition duration-200 group-hover:-translate-y-0.5">
-                                    Home
+                                    Jobs Recommender
                                 </p>
                                 <hr
-                                    className={`w-2/4 h-[1.5px] bg-blue-600 border-none ${
-                                        isActive ? "block" : "hidden group-hover:block"
-                                    }`}
+                                    className={`w-2/4 h-[1.5px] bg-blue-600 border-none ${isHomeActive ? "block" : "hidden group-hover:block"
+                                        }`}
                                 />
                             </>
                         )}
                     </NavLink>
 
-                    {/* Jobs Recommendor */}
                     <NavLink
-                        to="/recommendedjobs"
+                        to="/joblistings"
                         className="flex flex-col items-center gap-1 group"
                     >
                         {({ isActive }) => (
                             <>
                                 <p className="transition duration-200 group-hover:-translate-y-0.5">
-                                    Jobs
+                                    All Job Listings
                                 </p>
                                 <hr
-                                    className={`w-2/4 h-[1.5px] bg-blue-600 border-none ${
-                                        isActive ? "block" : "hidden group-hover:block"
-                                    }`}
+                                    className={`w-2/4 h-[1.5px] bg-blue-600 border-none ${isActive ? "block" : "hidden group-hover:block"
+                                        }`}
                                 />
                             </>
                         )}
@@ -74,13 +76,14 @@ const Navbar = () => {
 
             {/* Sliding Drawer */}
             <div
-                className={`fixed top-0 right-0 h-full w-64 bg-blue-100 border-2 shadow-lg z-40 transform transition-transform duration-300 
-                ${open ? "translate-x-0" : "translate-x-full"}`}
+                className={`fixed top-0 right-0 h-full w-64 bg-blue-100 shadow-xl z-40 transform transition-transform duration-300 
+    ${open ? "translate-x-0" : "translate-x-full"} rounded-l-2xl`}
             >
-                <div className="flex justify-between items-center p-5 border-b">
-                    <h2 className="text-xl font-semibold">Menu</h2>
+                {/* Drawer Header */}
+                <div className="flex justify-between items-center p-5 border-b bg-blue-100 rounded-tl-2xl">
+                    <h2 className="text-xl font-semibold text-gray-800">Menu</h2>
                     <button
-                        className="text-3xl"
+                        className="text-3xl text-gray-700 hover:text-blue-600 transition"
                         onClick={() => setOpen(false)}
                     >
                         ×
@@ -88,24 +91,25 @@ const Navbar = () => {
                 </div>
 
                 {/* Mobile Menu */}
-                <div className="flex flex-col p-5 text-gray-800 gap-5 text-lg">
-
+                <div className="flex flex-col p-5 text-gray-800 gap-4 text-lg">
                     <NavLink
                         to="/"
-                        onClick={() => setOpen(false)}
-                    >
-                        Home
-                    </NavLink>
-
-                    <NavLink
-                        to="/recommend"
+                        className="px-2 py-2 rounded-lg hover:bg-blue-50 transition font-medium"
                         onClick={() => setOpen(false)}
                     >
                         Jobs Recommender
                     </NavLink>
+
+                    <NavLink
+                        to="/joblistings"
+                        className="px-2 py-2 rounded-lg hover:bg-blue-50 transition font-medium"
+                        onClick={() => setOpen(false)}
+                    >
+                        All Job Listings
+                    </NavLink>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
