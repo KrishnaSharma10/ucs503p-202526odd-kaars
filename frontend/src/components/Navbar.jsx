@@ -7,6 +7,7 @@ const Navbar = () => {
     return (
         <div className="w-full bg-white shadow font-medium">
             <div className="flex items-center justify-between py-5 px-6 md:px-10">
+                
                 {/* Logo */}
                 <NavLink to="/" className="text-3xl font-bold text-blue-600">
                     JobWise
@@ -14,27 +15,29 @@ const Navbar = () => {
 
                 {/* Desktop Menu */}
                 <ul className="hidden md:flex gap-10 text-gray-700">
+
+                    {/* Home */}
                     <NavLink
-                        to="/joblistings"
+                        to="/"
                         className="flex flex-col items-center gap-1 group"
                     >
                         {({ isActive }) => (
                             <>
                                 <p className="transition duration-200 group-hover:-translate-y-0.5">
-                                    All Job Listings
+                                    Home
                                 </p>
                                 <hr
-                                    className={`w-2/4 h-[1.5px] bg-blue-600 border-none ${isActive
-                                        ? "block"
-                                        : "hidden group-hover:block"
-                                        }`}
+                                    className={`w-2/4 h-[1.5px] bg-blue-600 border-none ${
+                                        isActive ? "block" : "hidden group-hover:block"
+                                    }`}
                                 />
                             </>
                         )}
                     </NavLink>
 
+                    {/* Jobs Recommendor */}
                     <NavLink
-                        to="/"
+                        to="/recommend"
                         className="flex flex-col items-center gap-1 group"
                     >
                         {({ isActive }) => (
@@ -43,10 +46,9 @@ const Navbar = () => {
                                     Jobs Recommendor
                                 </p>
                                 <hr
-                                    className={`w-2/4 h-[1.5px] bg-blue-600 border-none ${isActive
-                                        ? "block"
-                                        : "hidden group-hover:block"
-                                        }`}
+                                    className={`w-2/4 h-[1.5px] bg-blue-600 border-none ${
+                                        isActive ? "block" : "hidden group-hover:block"
+                                    }`}
                                 />
                             </>
                         )}
@@ -85,16 +87,18 @@ const Navbar = () => {
                     </button>
                 </div>
 
+                {/* Mobile Menu */}
                 <div className="flex flex-col p-5 text-gray-800 gap-5 text-lg">
-                    <NavLink
-                        to="/joblistings"
-                        onClick={() => setOpen(false)}
-                    >
-                        All Job Listings
-                    </NavLink>
 
                     <NavLink
                         to="/"
+                        onClick={() => setOpen(false)}
+                    >
+                        Home
+                    </NavLink>
+
+                    <NavLink
+                        to="/recommend"
                         onClick={() => setOpen(false)}
                     >
                         Jobs Recommendor
